@@ -4,7 +4,7 @@
   "version": "0.1.0",
   "homepage": "",
   "repository": "",
-  "author": "",
+  "author": "Joseph K. Ranweiler",
   "main":"./index.js",
   "dependencies":{
     "coffee-script":"*",
