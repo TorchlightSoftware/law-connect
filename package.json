@@ -1,0 +1,31 @@
+{
+  "name": "law-connect",
+  "description": "Connect middleware for Law.",
+  "version": "0.1.0",
+  "homepage": "",
+  "repository": "",
+  "author": "",
+  "main":"./index.js",
+  "dependencies":{
+    "coffee-script":"*",
+    "lodash":"*"
+  },
+  "devDependencies":{
+    "mocha":"*",
+    "should":"*",
+    "connect":"*",
+    "restler":"*"
+  },
+  "engines":{
+    "node":">= 0.8.4"
+  },
+  "licenses":[
+    {
+      "type":"MIT",
+      "url":""
+    }
+  ],
+  "scripts": {
+    "test": "mocha"
+  }
+}
