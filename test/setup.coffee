@@ -4,7 +4,7 @@ connect = require 'connect'
 make = require '../lib/makeAdapter'
 
 
-setup = (services={}, routes={}, config={}) ->
+setup = (services={}, routes=[], config={}) ->
 
   host = config.host || 'localhost'
   port = config.port || 3000
@@ -18,13 +18,13 @@ setup = (services={}, routes={}, config={}) ->
   should.exist app
 
   adapter = make services, routes
-  should.exist adapter
+  should.exist adapter, 'adapter should exist'
 
   app.use connect.bodyParser()
   app.use adapter
 
   server = app.listen port
-  should.exist server
+  should.exist server, 'server should exist'
 
   return {app, server, url}
 
