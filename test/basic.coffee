@@ -5,18 +5,17 @@ restler = require 'restler'
 
 setup = require './setup'
 
-
 # test services
 services =
   'hello':
     serviceName: 'hello'
     service: ({}, done) ->
-      done null, {body: 'hello'}
+      done null, {greeting: 'hello'}
 
   'echo':
     serviceName: 'echo'
     service: ({}, done) ->
-      done()
+      done null, {}
 
 
 # test routes and response values
@@ -32,7 +31,7 @@ routes = [
   {
     serviceName: 'echo'
     method: 'post'
-    path: '/'
+    path: '/echo'
     postData:
       x: 2
       y: 3
@@ -47,8 +46,6 @@ routes = [
 
 describe 'with simple services wired to routes', () ->
   beforeEach (done) ->
-    # services = {}
-    # routes = {}
     {@app, @server, @url} = setup services, routes
     done()
 
@@ -56,16 +53,21 @@ describe 'with simple services wired to routes', () ->
     @server.close()
     done()
 
-  it 'should return with a 200 status', (done) ->
-    req = restler.get (url.resolve @url, '/hello?x=3')
-    should.exist req
+  for r in routes
+    do (r) ->
+      defaultDescription = "it should return expected values " +
+                           "for #{r.method.toUpperCase()} #{r.path}"
+      description = r.description || defaultDescription
 
-    req.on 'complete', (result, response) ->
-      console.log result
-      should.exist result, 'expected result to exist'
-      should.exist response, 'expected response to exist'
-      should.exist response.statusCode, 'expected statusCode to exist'
+      it description, (done) ->
+        req = restler[r.method] (url.resolve @url, r.path)
+        should.exist req
 
-      response.statusCode.should.equal 200
+        req.once 'complete', (result, response) ->
+          should.exist result, 'expected result to exist'
+          should.exist response, 'expected response to exist'
+          should.exist response.statusCode, 'expected statusCode to exist'
 
-      done()
+          response.statusCode.should.equal r.expected.statusCode
+
+          done()
