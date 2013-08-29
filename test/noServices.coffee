@@ -17,7 +17,7 @@ describe 'with no services or routes wired up', () ->
     req = restler.get @url
     should.exist req
 
-    req.on 'complete', (result, response) ->
+    req.once 'complete', (result, response) ->
       should.exist result, 'expected result to exist'
       should.exist response, 'expected response to exist'
       should.exist response.statusCode, 'expected statusCode to exist'
