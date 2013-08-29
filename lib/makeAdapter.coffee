@@ -46,10 +46,12 @@ makeAdapter = (services, routeDefs) ->
   # to the initialized services object.
   routes = []
   for def in routeDefs
-    {serviceName} = def
+    do (def) ->
+      {serviceName} = def
 
-    def.service = services[serviceName] || noService
-    routes.push def
+      foundService = services[serviceName]
+      def.service = foundService || noService
+      routes.push def
 
   # Return a piece of connect middleware
   (req, res) ->
@@ -65,7 +67,10 @@ makeAdapter = (services, routeDefs) ->
         when '501 Not Implemented'
           statusCode = 501
         else
-          statusCode = 200
+          if err?
+            statusCode = 500
+          else
+            statusCode = 200
 
       contentType = 'application/json'
 
