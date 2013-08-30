@@ -1,5 +1,5 @@
 should = require 'should'
-restler = require 'restler'
+request = require 'request'
 
 setup = require './setup'
 
@@ -14,14 +14,11 @@ describe 'with no services or routes wired up', () ->
     done()
 
   it 'should return with a 501 status', (done) ->
-    req = restler.get @url
-    should.exist req
+    request.get @url, (err, resp, body) ->
 
-    req.once 'complete', (result, response) ->
-      should.exist result, 'expected result to exist'
-      should.exist response, 'expected response to exist'
-      should.exist response.statusCode, 'expected statusCode to exist'
-
-      response.statusCode.should.equal 501
+      should.not.exist err
+      should.exist resp
+      should.exist resp.statusCode
+      resp.statusCode.should.equal 501
 
       done()

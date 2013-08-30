@@ -14,7 +14,7 @@
     "mocha":"*",
     "should":"*",
     "connect":"*",
-    "restler":"*"
+    "request":"*"
   },
   "engines":{
     "node":">= 0.8.4"

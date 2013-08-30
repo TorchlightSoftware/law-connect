@@ -1,7 +1,8 @@
 url = require 'url'
 
 should = require 'should'
-restler = require 'restler'
+request = require 'request'
+_ = require 'lodash'
 
 setup = require './setup'
 
@@ -9,13 +10,13 @@ setup = require './setup'
 services =
   'hello':
     serviceName: 'hello'
-    service: ({}, done) ->
-      done null, {greeting: 'hello'}
+    service: (args, done) ->
+      done null, {greeting: 'hello, world'}
 
   'echo':
     serviceName: 'echo'
-    service: ({}, done) ->
-      done null, {}
+    service: (args, done) ->
+      done null, {echoed: args}
 
 
 # test routes and response values
@@ -25,20 +26,21 @@ routes = [
     method: 'get'
     path: '/hello'
     expected:
-      body: 'hello, world'
+      body: {greeting: 'hello, world'}
       statusCode: 200
   }
   {
     serviceName: 'echo'
     method: 'post'
     path: '/echo'
-    postData:
+    data:
       x: 2
       y: 3
     expected:
       body:
-        x: 2
-        y: 3
+        echoed:
+          x: 2
+          y: 3
       statusCode: 200
   }
 ]
@@ -60,14 +62,22 @@ describe 'with simple services wired to routes', () ->
       description = r.description || defaultDescription
 
       it description, (done) ->
-        req = restler[r.method] (url.resolve @url, r.path)
-        should.exist req
 
-        req.once 'complete', (result, response) ->
-          should.exist result, 'expected result to exist'
-          should.exist response, 'expected response to exist'
-          should.exist response.statusCode, 'expected statusCode to exist'
+        options =
+          url: url.resolve @url, r.path
+          method: r.method
+          # We need `|| true` in case there is no data
+          # to ensure that the body is parsed as JSON.
+          json: r.data || true
 
-          response.statusCode.should.equal r.expected.statusCode
+        request options, (err, resp, body) ->
+          should.not.exist err
+          should.exist resp
+          should.exist body
+
+          should.exist resp.statusCode
+          resp.statusCode.should.equal r.expected.statusCode
+
+          (_.isEqual body, r.expected.body).should.be.true
 
           done()
