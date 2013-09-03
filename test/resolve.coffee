@@ -42,7 +42,7 @@ expected =
 
 describe 'resolve', () ->
   beforeEach (done) ->
-    @resolved = resolve routeDefs, services
+    @resolved = resolve services, routeDefs
     should.exist @resolved, '@resolved should exist'
     done()
 

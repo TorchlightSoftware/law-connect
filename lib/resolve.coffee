@@ -11,7 +11,7 @@ resolveDef = (services) ->
     def.service = foundService || noService
     return def
 
-resolve = (routeDefs, services) ->
+resolve = (services, routeDefs) ->
   resolved = routeDefs.map (resolveDef services)
 
 module.exports = resolve
