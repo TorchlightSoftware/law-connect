@@ -1,22 +1,29 @@
 module.exports = [
   {
-    serviceName: 'indexThing'
-    method: 'get'
     path: '/something'
-  }
-  {
-    serviceName: 'showThing'
     method: 'get'
-    path: '/something/:id'
+    serviceName: 'indexThings'
   }
   {
-    serviceName: 'createThing'
+    path: '/something/:id'
+    method: 'get'
+    serviceName: 'showThing'
+  }
+  {
+    path: '/something/:id'
     method: 'post'
-    path: '/something/:id'
+    serviceName: 'createThing'
   }
   {
-    serviceName: 'updateThing'
-    method: 'put'
     path: '/something/:id'
+    method: 'put'
+    serviceName: 'updateThing'
+  }
+  {
+    # we expected this NOT to resolve to a service, thus
+    # to resolve to the default `noService` 501 service
+    path: '/nothing'
+    method: 'get'
+    serviceName: 'nothing'
   }
 ]
