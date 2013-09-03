@@ -3,20 +3,10 @@ should = require 'should'
 resolve = require '../lib/resolve'
 
 {inspect} = require './util'
+
+
 routeDefs = require '../sample/routes'
-
-services =
-  indexThings: (args, done) ->
-    done null, {data: 'indexThings'}
-
-  showThing: (args, done) ->
-    done null, {data: 'showThing'}
-
-  createThing: (args, done) ->
-    done null, {data: 'createThing'}
-
-  updateThing: (args, done) ->
-    done null, {data: 'updateThing'}
+services = require '../sample/services'
 
 expected =
   'indexThings':
