@@ -7,7 +7,7 @@ noService = require './noService'
 resolveDef = (services) ->
   (def) ->
     {serviceName} = def
-    foundService = services[serviceName]
+    foundService = services[serviceName]?.service
     def.service = foundService || noService
     return def
 

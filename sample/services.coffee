@@ -1,12 +1,16 @@
 module.exports =
-  indexThings: (args, done) ->
-    done null, {data: 'indexThings'}
+  indexThings:
+    service: (args, done) ->
+      done null, {data: 'indexThings'}
 
-  showThing: (args, done) ->
-    done null, {data: 'showThing'}
+  showThing:
+    service: (args, done) ->
+      done null, {data: 'showThing'}
 
-  createThing: (args, done) ->
-    done null, {data: 'createThing'}
+  createThing:
+    service: (args, done) ->
+      done null, {data: 'createThing'}
 
-  updateThing: (args, done) ->
-    done null, {data: 'updateThing'}
+  updateThing:
+    service: (args, done) ->
+      done null, {data: 'updateThing'}
