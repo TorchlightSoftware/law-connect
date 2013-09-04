@@ -166,6 +166,6 @@ describe 'resource generation', () ->
       it "should #{description}", (done) ->
         routeDefs = makeResource def
 
-        (_.isEqual routeDefs, expected).should.equal true
+        (_.isEqual routeDefs, expected).should.be.true
 
         done()

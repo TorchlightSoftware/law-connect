@@ -4,7 +4,9 @@ _ = require 'lodash'
 {inspect} = require './util'
 expandResources = require '../lib/expandResources'
 
+
 routesWithResource = require '../sample/routesWithResource'
+
 expected = [
   {
     path: '/something'
@@ -64,5 +66,5 @@ expected = [
 describe 'in-place route generation for resources', () ->
   it 'should insert the generated routes in-place', (done) ->
     expanded = expandResources routesWithResource
-    (_.isEqual expanded, expanded).should.equal true
+    (_.isEqual expanded, expanded).should.be.true
     done()
