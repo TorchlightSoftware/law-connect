@@ -18,6 +18,13 @@ services =
     service: (args, done) ->
       done null, {echoed: args}
 
+  'greet':
+    serviceName: 'greet'
+    service: (args, done) ->
+      {name} = args
+      greeting = "greetings, #{name}"
+      done null, {greeting}
+
 
 # test routes and response values
 routes = [
@@ -43,6 +50,17 @@ routes = [
           y: 3
       statusCode: 200
   }
+  {
+    serviceName: 'greet'
+    method: 'get'
+    path: '/greet/:name'
+    reqPath: '/greet/everyone'
+    data: {}
+    expected:
+      body:
+        greeting: "greetings, everyone"
+      statusCode: 200
+  }
 ]
 
 
@@ -62,9 +80,10 @@ describe 'with simple services wired to routes', () ->
       description = r.description || defaultDescription
 
       it description, (done) ->
+        path = r.reqPath || r.path
 
         options =
-          url: url.resolve @url, r.path
+          url: url.resolve @url, path
           method: r.method
           # We need `|| true` in case there is no data
           # to ensure that the body is parsed as JSON.

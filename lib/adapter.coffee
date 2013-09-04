@@ -23,8 +23,8 @@ makeAdapter = (services, routeDefs) ->
     found = router.match pathname
 
     return {
-      service: found.fn[method] || noService
-      pathArgs: found.params
+      service: found?.fn[method] || noService
+      pathArgs: found?.params
     }
 
   # Return a piece of connect middleware
