@@ -34,7 +34,7 @@ makeResource = (def) ->
   # local constants:
   #   basePath is the collection path prefix
   #   instancePath is the path prefix for one instance
-  basePath = path.join pathPrefix, collection
+  basePath = path.join '/', pathPrefix, collection
   instancePath = path.join basePath, idKey
 
   # build array of auto-generated routes.

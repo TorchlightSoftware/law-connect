@@ -103,6 +103,55 @@ testData = [
       }
     ]
   }
+  {
+    description: 'let you specify all path values'
+    def:
+      collection: 'photographs'
+      instance: 'photograph'
+      pathPrefix: 'api'
+    expected: [
+      {
+        path: '/api/photographs'
+        method: 'get'
+        serviceName: 'indexPhotographs'
+      }
+      {
+        path: '/api/photographs/new'
+        method: 'get'
+        serviceName: 'newPhotograph'
+      }
+      {
+        path: '/api/photographs'
+        method: 'post'
+        serviceName: 'createPhotograph'
+      }
+      {
+        path: '/api/photographs/:id'
+        method: 'get'
+        serviceName: 'showPhotograph'
+      }
+      {
+        path: '/api/photographs/:id/edit'
+        method: 'get'
+        serviceName: 'editPhotograph'
+      }
+      {
+        path: '/api/photographs/:id'
+        method: 'patch'
+        serviceName: 'updatePhotograph'
+      }
+      {
+        path: '/api/photographs/:id'
+        method: 'put'
+        serviceName: 'updatePhotograph'
+      }
+      {
+        path: '/api/photographs/:id'
+        method: 'delete'
+        serviceName: 'deletePhotograph'
+      }
+    ]
+  }
 ]
 
 
