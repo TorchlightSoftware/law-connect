@@ -1,43 +1,39 @@
+Router = require 'routes'
 _ = require 'lodash'
 
-
-noService = (args, done) ->
-  # https://tools.ietf.org/html/rfc2616#section-10.5.2
-  done (new Error '501 Not Implemented'), {}
+noService = require './noService'
 
 # Given a collection of route defs with resolved law services
 # and a request object, return an object containing the service,
 # and the HTTP request-extracted arguments we wish to pass to it.
-match = (routes, req) ->
-  method = req.method.toLowerCase()
-  pathname = req._parsedUrl.pathname
+makeRouter = require './makeRouter'
 
-  for r in routes
-    methodMatch = (r.method == method)
-    pathMatch = (r.path == pathname)
-    if methodMatch and pathMatch
-      {service} = r.service
+makeMatch = (routes) ->
+  router = makeRouter routes
 
-  service = service || noService
+  match = (routes, req) ->
+    method = req.method.toLowerCase()
+    pathname = req._parsedUrl.pathname
 
-  return service
+    found = router.match pathname
+    service = found?[method]
+
+    # for r in routes
+    #   methodMatch = (r.method == method)
+    #   pathMatch = (r.path == pathname)
+    #   if methodMatch and pathMatch
+    #     {service} = r.service
+
+    service = service || noService
+
+    return service
 
 # services :: already-initialized law services
 # routeDefs :: config object for RESTful routing
 makeAdapter = (services, routeDefs) ->
 
-  # Resolve service names in route definitions.
-  # Default function returns with 501 Not Implemented if the
-  # `routes` config structure has any empty service refs, relative
-  # to the initialized services object.
-  routes = []
-  for def in routeDefs
-    do (def) ->
-      {serviceName} = def
 
-      foundService = services[serviceName]
-      def.service = foundService || noService
-      routes.push def
+
 
   # Return a piece of connect middleware
   (req, res) ->

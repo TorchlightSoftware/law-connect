@@ -1,2 +1,2 @@
 module.exports =
-  make: require './makeAdapter'
+  make: require './adapter'

@@ -1,7 +1,7 @@
 should = require 'should'
 connect = require 'connect'
 
-make = require '../lib/makeAdapter'
+make = require '../lib/adapter'
 
 
 setup = (services={}, routes=[], config={}) ->
