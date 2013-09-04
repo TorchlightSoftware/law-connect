@@ -16,15 +16,30 @@ camelCase = (args...) ->
 
 makeResource = (def) ->
 
+  # name of one instance of the resource
   instance = def.instance || def.name
-  collection = def?.collection || def.name
-  idKey = def?.idKey || ':id'
 
+  # name of the collective resource
+  collection = def?.collection || def.name
+
+  # unless overridden, default to ':id' for instance ids
+  if def?.idKey
+    idKey = ":#{def.idKey}"
+  else
+    idKey = ':id'
+
+  # submount the path if desired
   pathPrefix = def?.pathPrefix || '/'
 
+  # local constants:
+  #   basePath is the collection path prefix
+  #   instancePath is the path prefix for one instance
   basePath = path.join pathPrefix, collection
   instancePath = path.join basePath, idKey
 
+  # build array of auto-generated routes.
+  # modeled after:
+  #   http://guides.rubyonrails.org/routing.html#crud-verbs-and-actions
   routeDefs = [
     # GET /photos -> #index
     # display a list of all photos

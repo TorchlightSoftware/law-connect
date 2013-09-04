@@ -54,6 +54,55 @@ testData = [
       }
     ]
   }
+  {
+    description: 'let you change the `id` key'
+    def:
+      name: 'photos'
+      instance: 'photo'
+      idKey: 'ident'
+    expected: [
+      {
+        path: '/photos'
+        method: 'get'
+        serviceName: 'indexPhotos'
+      }
+      {
+        path: '/photos/new'
+        method: 'get'
+        serviceName: 'newPhoto'
+      }
+      {
+        path: '/photos'
+        method: 'post'
+        serviceName: 'createPhoto'
+      }
+      {
+        path: '/photos/:ident'
+        method: 'get'
+        serviceName: 'showPhoto'
+      }
+      {
+        path: '/photos/:ident/edit'
+        method: 'get'
+        serviceName: 'editPhoto'
+      }
+      {
+        path: '/photos/:ident'
+        method: 'patch'
+        serviceName: 'updatePhoto'
+      }
+      {
+        path: '/photos/:ident'
+        method: 'put'
+        serviceName: 'updatePhoto'
+      }
+      {
+        path: '/photos/:ident'
+        method: 'delete'
+        serviceName: 'deletePhoto'
+      }
+    ]
+  }
 ]
 
 
