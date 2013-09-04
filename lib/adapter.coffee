@@ -2,48 +2,40 @@ Router = require 'routes'
 _ = require 'lodash'
 
 noService = require './noService'
+resolve = require './resolve'
+makeRouter = require './makeRouter'
+
 
 # Given a collection of route defs with resolved law services
 # and a request object, return an object containing the service,
 # and the HTTP request-extracted arguments we wish to pass to it.
-makeRouter = require './makeRouter'
+#   services :: already-initialized law services
+#   routeDefs :: config object for RESTful routing
+makeAdapter = (services, routeDefs) ->
 
-makeMatch = (routes) ->
-  router = makeRouter routes
+  resolved = resolve services, routeDefs
 
-  match = (routes, req) ->
+  match = (req) ->
     method = req.method.toLowerCase()
     pathname = req._parsedUrl.pathname
 
+    router = makeRouter resolved
     found = router.match pathname
-    service = found?[method]
 
-    # for r in routes
-    #   methodMatch = (r.method == method)
-    #   pathMatch = (r.path == pathname)
-    #   if methodMatch and pathMatch
-    #     {service} = r.service
-
-    service = service || noService
-
-    return service
-
-# services :: already-initialized law services
-# routeDefs :: config object for RESTful routing
-makeAdapter = (services, routeDefs) ->
-
-
-
+    return {
+      service: found.fn[method] || noService
+      pathArgs: found.params
+    }
 
   # Return a piece of connect middleware
   (req, res) ->
 
+    {service, pathArgs} = match req
+
     # This assumes that connect.bodyParser has been applied
     # earlier in the middleware chain.
     {body, query, cookies} = req
-    args = _.merge {}, query, cookies, body
-
-    service = match routes, req
+    args = _.merge {}, pathArgs, query, cookies, body
 
     service args, (err, result) ->
       switch err?.message
@@ -51,6 +43,7 @@ makeAdapter = (services, routeDefs) ->
           statusCode = 501
         else
           if err?
+            console.log {err}
             statusCode = 500
           else
             statusCode = 200
