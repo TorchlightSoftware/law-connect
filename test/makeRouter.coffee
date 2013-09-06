@@ -1,3 +1,4 @@
+law = require 'law'
 should = require 'should'
 
 {inspect} = require './util'
@@ -8,7 +9,8 @@ makeRouter = require '../lib/makeRouter'
 
 
 routeDefs = require '../sample/routes'
-services = require '../sample/services'
+serviceDefs = require '../sample/services'
+services = law.process serviceDefs
 
 
 describe 'makeRouter(...).match', () ->

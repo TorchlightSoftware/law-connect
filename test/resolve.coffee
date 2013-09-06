@@ -1,4 +1,5 @@
 should = require 'should'
+law = require 'law'
 
 resolve = require '../lib/resolve'
 
@@ -6,7 +7,9 @@ resolve = require '../lib/resolve'
 
 
 routeDefs = require '../sample/routes'
-services = require '../sample/services'
+serviceDefs = require '../sample/services'
+services = law.process serviceDefs
+
 
 expected =
   'indexThings':

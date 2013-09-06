@@ -1,5 +1,6 @@
 url = require 'url'
 
+law = require 'law'
 should = require 'should'
 request = require 'request'
 _ = require 'lodash'
@@ -7,24 +8,22 @@ _ = require 'lodash'
 setup = require './setup'
 
 # test services
-services =
+serviceDefs =
   'hello':
-    serviceName: 'hello'
     service: (args, done) ->
       done null, {greeting: 'hello, world'}
 
   'echo':
-    serviceName: 'echo'
     service: (args, done) ->
       done null, {echoed: args}
 
   'greet':
-    serviceName: 'greet'
     service: (args, done) ->
       {name} = args
       greeting = "greetings, #{name}"
       done null, {greeting}
 
+services = law.process serviceDefs
 
 # test routes and response values
 routes = [
