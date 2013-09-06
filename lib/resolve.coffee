@@ -4,14 +4,12 @@ noService = require './noService'
 # Default function returns with '501 Not Implemented' if the
 # `routesDefs` config structure has any unresolvable service refs,
 # relative to the initialized `services` object.
-resolveDef = (services) ->
-  (def) ->
-    {serviceName} = def
-    foundService = services[serviceName]?.service
-    def.service = foundService or noService
-    return def
-
 resolve = (services, routeDefs) ->
-  resolved = routeDefs.map (resolveDef services)
+  attachService = (def) ->
+    foundService = services[def.serviceName]
+    def.service = foundService or noService
+
+  routeDefs.forEach attachService
+  return routeDefs
 
 module.exports = resolve
