@@ -8,9 +8,10 @@ makeResource = require '../lib/makeResource'
 testData = [
   {
     description: 'have sane defaults'
-    def:
-      name: 'photos'
-      instance: 'photo'
+    routeDef:
+      resource:
+        name: 'photos'
+        instance: 'photo'
     expected: [
       {
         path: '/photos'
@@ -56,10 +57,11 @@ testData = [
   }
   {
     description: 'let you change the `id` key'
-    def:
-      name: 'photos'
-      instance: 'photo'
-      idKey: 'ident'
+    routeDef:
+      resource:
+        name: 'photos'
+        instance: 'photo'
+        idKey: 'ident'
     expected: [
       {
         path: '/photos'
@@ -105,10 +107,11 @@ testData = [
   }
   {
     description: 'let you specify all path values'
-    def:
-      collection: 'photographs'
-      instance: 'photograph'
-      pathPrefix: 'api'
+    routeDef:
+      resource:
+        collection: 'photographs'
+        instance: 'photograph'
+        pathPrefix: 'api'
     expected: [
       {
         path: '/api/photographs'
@@ -161,11 +164,10 @@ describe 'resource generation', () ->
 
   for test in testData
     do (test) ->
-      {def, description, expected} = test
+      {routeDef, description, expected} = test
 
       it "should #{description}", (done) ->
-        routeDefs = makeResource def
-
+        routeDefs = makeResource routeDef
         (_.isEqual routeDefs, expected).should.be.true
 
         done()

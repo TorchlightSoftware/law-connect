@@ -14,7 +14,9 @@ camelCase = (args...) ->
   return "#{prefix}#{suffix}"
 
 
-makeResource = (def) ->
+makeResource = (routeDef) ->
+  return routeDef unless routeDef.resource?
+  def = routeDef.resource
 
   # name of one instance of the resource
   instance = def.instance or def.name
