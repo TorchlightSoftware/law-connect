@@ -1,14 +1,10 @@
 makeResource = require './makeResource'
+_ = require 'lodash'
 
 
 expandResources = (routeDefs) ->
-  expanded = routeDefs.map (def) ->
-    if def.resource?
-      val = makeResource def.resource
-    else
-      val = [def]
-    return val
-  flattened = [].concat expanded...
+
+  _.flatten (_.map routeDefs, makeResource)
 
 
 module.exports = expandResources
