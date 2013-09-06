@@ -25,7 +25,7 @@ makeAdapter = (services, routeDefs) ->
     found = router.match pathname
 
     return {
-      service: found?.fn[method] || noService
+      service: found?.fn[method] or noService
       pathArgs: found?.params
     }
 

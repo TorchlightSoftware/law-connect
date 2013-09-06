@@ -17,10 +17,10 @@ camelCase = (args...) ->
 makeResource = (def) ->
 
   # name of one instance of the resource
-  instance = def.instance || def.name
+  instance = def.instance or def.name
 
   # name of the collective resource
-  collection = def?.collection || def.name
+  collection = def?.collection or def.name
 
   # unless overridden, default to ':id' for instance ids
   if def?.idKey
@@ -29,7 +29,7 @@ makeResource = (def) ->
     idKey = ':id'
 
   # submount the path if desired
-  pathPrefix = def?.pathPrefix || '/'
+  pathPrefix = def?.pathPrefix or '/'
 
   # local constants:
   #   basePath is the collection path prefix

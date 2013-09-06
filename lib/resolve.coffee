@@ -8,7 +8,7 @@ resolveDef = (services) ->
   (def) ->
     {serviceName} = def
     foundService = services[serviceName]?.service
-    def.service = foundService || noService
+    def.service = foundService or noService
     return def
 
 resolve = (services, routeDefs) ->
