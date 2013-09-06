@@ -15,7 +15,8 @@
     "mocha":"*",
     "should":"*",
     "connect":"*",
-    "request":"*"
+    "request":"*",
+    "law":"*"
   },
   "engines":{
     "node":">= 0.8.4"
