@@ -53,7 +53,6 @@ makeAdapter = (services, routeDefs) ->
       contentType = 'application/json'
 
       res.writeHead statusCode, contentType
-      toSend = JSON.stringify result
       res.end (JSON.stringify result)
 
 
