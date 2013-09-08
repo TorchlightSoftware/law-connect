@@ -4,7 +4,7 @@ _ = require 'lodash'
 noService = require './noService'
 resolve = require './resolve'
 makeRouter = require './makeRouter'
-expandResources = require './expandResources'
+makeResource = require './makeResource'
 
 
 # Given a collection of route defs with resolved law services
@@ -14,7 +14,7 @@ expandResources = require './expandResources'
 #   routeDefs :: config object for RESTful routing
 makeAdapter = (services, routeDefs) ->
 
-  expandedDefs = expandResources routeDefs
+  expandedDefs = _.flatten (_.map routeDefs, makeResource)
   resolved = resolve services, expandedDefs
 
   match = (req) ->
