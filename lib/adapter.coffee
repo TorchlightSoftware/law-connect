@@ -17,6 +17,10 @@ makeAdapter = (services, routeDefs) ->
   expandedDefs = _.flatten (_.map routeDefs, makeResource)
   resolved = resolve services, expandedDefs
 
+  # given a request:
+  #   1. find the first matching route
+  #   2. extract the path arguments and
+  #   3. return the corresponding Law service (if any)
   match = (req) ->
     method = req.method.toLowerCase()
     pathname = req._parsedUrl.pathname
