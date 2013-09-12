@@ -18,7 +18,7 @@ makeAdapter = (services, routeDefs) ->
   resolved = resolve services, expandedDefs
   router = makeRouter resolved
 
-  # given a request:
+  # Given a request:
   #   1. find the first matching route
   #   2. extract the path arguments and
   #   3. return the corresponding Law service (if any)
