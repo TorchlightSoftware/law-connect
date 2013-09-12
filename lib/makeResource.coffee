@@ -5,6 +5,9 @@ path = require 'path'
 
 
 makeResource = (routeDef) ->
+  # If `resource` is not a key in `routeDef`, then the
+  # routeDef does not define a resource, so we don't want
+  # to auto-expand it, and should return early.
   return routeDef unless routeDef.resource?
   def = routeDef.resource
 
