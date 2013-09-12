@@ -16,6 +16,7 @@ makeAdapter = (services, routeDefs) ->
 
   expandedDefs = _.flatten (_.map routeDefs, makeResource)
   resolved = resolve services, expandedDefs
+  router = makeRouter resolved
 
   # given a request:
   #   1. find the first matching route
@@ -25,7 +26,6 @@ makeAdapter = (services, routeDefs) ->
     method = req.method.toLowerCase()
     pathname = req._parsedUrl.pathname
 
-    router = makeRouter resolved
     found = router.match pathname
 
     return {
