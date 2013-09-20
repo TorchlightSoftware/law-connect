@@ -79,14 +79,14 @@ describe 'with simple services wired to routes', () ->
       description = r.description || defaultDescription
 
       it description, (done) ->
-        path = r.reqPath || r.path
+        path = r.reqPath or r.path
 
         options =
           url: url.resolve @url, path
           method: r.method
-          # We need `|| true` in case there is no data
+          # We need `or true` in case there is no data
           # to ensure that the body is parsed as JSON.
-          json: r.data || true
+          json: r.data or true
 
         request options, (err, resp, body) ->
           should.not.exist err
