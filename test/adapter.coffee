@@ -76,7 +76,7 @@ describe 'with simple services wired to routes', () ->
     do (r) ->
       defaultDescription = "it should return expected values " +
                            "for #{r.method.toUpperCase()} #{r.path}"
-      description = r.description || defaultDescription
+      description = r.description or defaultDescription
 
       it description, (done) ->
         path = r.reqPath or r.path

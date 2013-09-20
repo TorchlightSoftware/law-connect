@@ -6,8 +6,8 @@ make = require '../lib/adapter'
 
 setup = (services={}, routes=[], config={}) ->
 
-  host = config.host || 'localhost'
-  port = config.port || 3000
+  host = config.host or 'localhost'
+  port = config.port or 3000
 
   should.exist host
   should.exist port
