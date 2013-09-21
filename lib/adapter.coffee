@@ -1,11 +1,13 @@
 Router = require 'routes'
 _ = require 'lodash'
 
+{errors} = require 'law'
+
 noService = require './noService'
 resolve = require './resolve'
 makeRouter = require './makeRouter'
 makeResource = require './makeResource'
-
+errorMap = require './errorMap'
 
 # Given a collection of route defs with resolved law services
 # and a request object, return an object containing the service,
@@ -44,20 +46,35 @@ makeAdapter = (services, routeDefs) ->
     args = _.merge {}, pathArgs, query, cookies, body
 
     service args, (err, result) ->
-      switch err?.message
-        when '501 Not Implemented'
+      if (err instanceof errors.LawError)
+        # The error is an instance of LawError, so we try to
+        # map it to specially-defined handling.
+        {responseBody, statusCode} = errorMap err
+        result = responseBody
+      else if (err instanceof Error)
+        # default, generic error handling
+        if err.message == '501 Not Implemented'
           statusCode = 501
         else
-          if err?
-            console.log {err}
-            statusCode = 500
-          else
-            statusCode = 200
+          statusCode = 500
+        responseBody =
+          reason: err.message
+          serviceName: service.serviceName
+      else
+        # All okay, but we need to add special
+        # checks for explicit status codes &c.
+        responseBody = _.cloneDeep result
+
+        # We don't want to include the statusCode
+        # as part of the response body.
+        delete responseBody.statusCode
+
+        statusCode = result.statusCode or 200
 
       contentType = 'application/json'
 
       res.writeHead statusCode, contentType
-      res.end (JSON.stringify result)
+      res.end (JSON.stringify responseBody)
 
 
 module.exports = makeAdapter
