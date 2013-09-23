@@ -33,7 +33,7 @@ serviceDefs =
       err = new Error 'this is not a Law error'
       done err
 
-services = law.process serviceDefs
+services = law.applyMiddleware serviceDefs
 
 # test routes and response values
 routes = [
@@ -100,7 +100,17 @@ routes = [
 ]
 
 
+class TestLogger
+  @logfile = []
+  @log = (msg) =>
+    @logfile.push msg
+
+
 describe 'with simple services wired to routes', () ->
+  before (done) ->
+    @logger = new TestLogger()
+    done()
+
   beforeEach (done) ->
     {@app, @server, @url} = setup services, routes
     done()
@@ -136,3 +146,6 @@ describe 'with simple services wired to routes', () ->
           (_.isEqual body, r.expected.body).should.be.true
 
           done()
+
+  after (done) ->
+    done()

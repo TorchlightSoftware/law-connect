@@ -8,7 +8,7 @@ resolve = require '../lib/resolve'
 
 routeDefs = require '../sample/routes'
 serviceDefs = require '../sample/services'
-services = law.process serviceDefs
+services = law.applyMiddleware serviceDefs
 
 
 expected =

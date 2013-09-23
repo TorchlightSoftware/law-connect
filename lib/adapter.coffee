@@ -14,7 +14,7 @@ errorMap = require './errorMap'
 # and the HTTP request-extracted arguments we wish to pass to it.
 #   services :: already-initialized law services
 #   routeDefs :: config object for RESTful routing
-makeAdapter = (services, routeDefs) ->
+makeAdapter = ({services, routeDefs}) ->
 
   expandedDefs = _.flatten (_.map routeDefs, makeResource)
   resolved = resolve services, expandedDefs

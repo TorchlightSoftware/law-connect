@@ -18,7 +18,7 @@ serviceDefs =
       done err
 
 # wire up a hot services object
-services = law.process serviceDefs
+services = law.applyMiddleware serviceDefs
 
 # define a test route to return errors
 routes = [

@@ -10,7 +10,7 @@ makeRouter = require '../lib/makeRouter'
 
 routeDefs = require '../sample/routes'
 serviceDefs = require '../sample/services'
-services = law.process serviceDefs
+services = law.applyMiddleware serviceDefs
 
 
 describe 'makeRouter(...).match', () ->

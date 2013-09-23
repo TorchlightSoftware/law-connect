@@ -17,7 +17,7 @@ setup = (services={}, routes=[], config={}) ->
   app = connect()
   should.exist app
 
-  adapter = make services, routes
+  adapter = make {services, routeDefs: routes}
   should.exist adapter, 'adapter should exist'
 
   app.use connect.bodyParser()
