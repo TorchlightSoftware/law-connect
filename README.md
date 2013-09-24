@@ -78,7 +78,7 @@ object. The current properties, which all default to `true`, are:
 
 - `includeDetails`: Include context details attached as properties to any subtypes of `LawError`.
 - `includeMessage`: Include the `Error.message` property.
-- `includeStack`: Include
+- `includeStack`: Include the stack trace via the `Error.stack` property.
 
 ## License
 
