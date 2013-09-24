@@ -2,6 +2,82 @@
 
 Connect middleware for Law.
 
+## Purpose
+Law-Connect provides a piece of Connect middleware to route HTTP requests
+to Law services. It provides configurable routing on URI path and HTTP
+method, as well as a `resource` helper which expands into standard CRUD
+routes (modeled after the Rails `resources`[1]).
+
+[1] http://guides.rubyonrails.org/routing.html#crud-verbs-and-actions
+
+## Usage
+Law-Connect provides a standard Connect middleware.We expect the user to have a
+collection of _already-configured_ Law services (`services`), a collection of
+route definitions (`routeDefs`), and an optional object (`options` )of parameters
+that control how error information is exposed in responses.
+
+## Lifecycle
+Law-Connect simply provides a constructor for a piece of Connect middleware.
+It expects a fully wired-up `services` object (the output of `law.create`).
+
+## Example
+
+    connect = require 'connect'
+    lawAdapter = require 'law-connect'
+
+    # Given a Connect application...
+    app = connect()
+
+    # The connect bodyParser middleware must be `use`'d before Law-Connect
+    app.use connect.bodyParser() # required!
+
+    # Given a wired-up `services` object, e.g. the result of:
+    #   services = law.create {services, jargon, policy}
+    routeDefs = load './routeDefs'
+
+    # Hide most Error information in responses
+    options =
+      includeDetails: false
+      includeStack: false
+
+    # Apply the middleware!
+    app.use lawAdapter({services, routeDefs, options})
+
+
+## Error handling and HTTP status codes
+
+Errors are passed in the first callback argument, according to the Node convention
+used within Law. Errors within Law are subtypes of a `LawError` subtype of `Error`,
+created with the `tea-error` library. Thus `LawError` and subtypes enrich `Error`
+with a `toJSON` method and the ability to construct instances with additional
+properties containing information about the error context.
+
+By default, all error response bodies include:
+- The error `message`
+- All custom, service-specific properties attached to the `LawError` instance.
+- The error stack trace (`stack`)
+
+If a Law service returns an error, the HTTP response presently defaults to using a
+status code of `500 Internal Server Error`.
+
+If there was no Law service that could be matched with the request, the middleware
+will return a `501 Not Implemented` HTTP response.
+
+Otherwise, the default response is `200 OK`. Specific HTTP codes can be specified by
+Law services by including a `statusCode` property in the `results` argument of the
+callback, which will always be treated as metadata (and thus _not_ included in the
+response body).
+
+
+## Configuration
+
+Optional configuration can be passed via the `options` property of the arguments
+object. The current properties, which all default to `true`, are:
+
+- `includeDetails`: Include context details attached as properties to any subtypes of `LawError`.
+- `includeMessage`: Include the `Error.message` property.
+- `includeStack`: Include
+
 ## License
 
 (MIT License)
