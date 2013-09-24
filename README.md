@@ -21,28 +21,30 @@ Law-Connect simply provides a constructor for a piece of Connect middleware.
 It expects a fully wired-up `services` object (the output of `law.create`).
 
 ## Example
+(In CoffeeScript):
 
-    connect = require 'connect'
-    lawAdapter = require 'law-connect'
+```coffee
+connect = require 'connect'
+lawAdapter = require 'law-connect'
 
-    # Given a Connect application...
-    app = connect()
+# Given a Connect application...
+app = connect()
 
-    # The connect bodyParser middleware must be `use`'d before Law-Connect
-    app.use connect.bodyParser() # required!
+# The connect bodyParser middleware must be `use`'d before Law-Connect
+app.use connect.bodyParser() # required!
 
-    # Given a wired-up `services` object, e.g. the result of:
-    #   services = law.create {services, jargon, policy}
-    routeDefs = load './routeDefs'
+# Given a wired-up `services` object, e.g. the result of:
+#   services = law.create {services, jargon, policy}
+routeDefs = load './routeDefs'
 
-    # Hide most Error information in responses
-    options =
-      includeDetails: false
-      includeStack: false
+# Hide most Error information in responses
+options =
+  includeDetails: false
+  includeStack: false
 
-    # Apply the middleware!
-    app.use lawAdapter({services, routeDefs, options})
-
+# Apply the middleware!
+app.use lawAdapter({services, routeDefs, options})
+```
 
 ## Error handling and HTTP status codes
 
