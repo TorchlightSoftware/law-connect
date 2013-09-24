@@ -4,7 +4,7 @@ connect = require 'connect'
 make = require '../lib/adapter'
 
 
-setup = (services={}, routes=[], config={}) ->
+setup = (services={}, routes=[], config={}, options={}) ->
 
   host = config.host or 'localhost'
   port = config.port or 3000
@@ -17,7 +17,7 @@ setup = (services={}, routes=[], config={}) ->
   app = connect()
   should.exist app
 
-  adapter = make {services, routeDefs: routes}
+  adapter = make {services, routeDefs: routes, options}
   should.exist adapter, 'adapter should exist'
 
   app.use connect.bodyParser()

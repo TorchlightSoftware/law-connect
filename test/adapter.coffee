@@ -93,26 +93,18 @@ routes = [
     data: {}
     expected:
       body:
-        reason: 'this is not a Law error',
-        serviceName: 'returnNonLawError'
+        message: 'this is not a Law error',
+        # serviceName: 'returnNonLawError'
       statusCode: 500
   }
 ]
 
 
-class TestLogger
-  @logfile = []
-  @log = (msg) =>
-    @logfile.push msg
-
-
 describe 'with simple services wired to routes', () ->
-  before (done) ->
-    @logger = new TestLogger()
-    done()
-
   beforeEach (done) ->
-    {@app, @server, @url} = setup services, routes
+    options =
+      includeStack: false
+    {@app, @server, @url} = setup services, routes, {}, options
     done()
 
   afterEach (done) ->

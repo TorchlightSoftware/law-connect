@@ -1,6 +1,6 @@
 _ = require 'lodash'
 
-module.exports = (err, result, options) ->
+module.exports = (err, result, options={}) ->
   # By default, set all inclusion flags to 'true'
   includeDetails = includeStack = includeMessage = true
 
@@ -28,9 +28,12 @@ module.exports = (err, result, options) ->
   if includeStack
     body.stack = err.stack
 
+  dontCopy = ['message', 'name', 'serialize', 'toJSON', 'constructor']
   if includeDetails
-    details = _.clone err.valueOf()
-    delete details.message
+    details = {}
+    for k,v of err
+      unless k in dontCopy
+        details[k] = v
     body = _.merge body, details
 
   return body

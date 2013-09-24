@@ -8,13 +8,14 @@ resolve = require './resolve'
 makeRouter = require './makeRouter'
 makeResource = require './makeResource'
 errorMap = require './errorMap'
+getResponseBody = require './getResponseBody'
 
 # Given a collection of route defs with resolved law services
 # and a request object, return an object containing the service,
 # and the HTTP request-extracted arguments we wish to pass to it.
 #   services :: already-initialized law services
 #   routeDefs :: config object for RESTful routing
-makeAdapter = ({services, routeDefs}) ->
+makeAdapter = ({services, routeDefs, options}) ->
 
   expandedDefs = _.flatten (_.map routeDefs, makeResource)
   resolved = resolve services, expandedDefs
@@ -51,15 +52,20 @@ makeAdapter = ({services, routeDefs}) ->
         # map it to specially-defined handling.
         {responseBody, statusCode} = errorMap err
         result = responseBody
+
       else if (err instanceof Error)
+        responseBody = getResponseBody err, result, options
+
         # default, generic error handling
         if err.message == '501 Not Implemented'
           statusCode = 501
+          responseBody = {}
         else
           statusCode = 500
-        responseBody =
-          reason: err.message
-          serviceName: service.serviceName
+        # responseBody = getResponseBody err, result, options
+        # responseBody =
+        #   reason: err.message
+        #   serviceName: service.serviceName
       else
         # All okay, but we need to add special
         # checks for explicit status codes &c.

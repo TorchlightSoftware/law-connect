@@ -6,7 +6,9 @@ setup = require './setup'
 
 describe 'with no services or routes wired up', () ->
   beforeEach (done) ->
-    {@app, @server, @url} = setup()
+    options =
+      includeStack: false
+    {@app, @server, @url} = setup null, null, null, options
     done()
 
   afterEach (done) ->
