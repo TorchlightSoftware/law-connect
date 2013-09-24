@@ -73,6 +73,48 @@ response body).
 
 ## Configuration
 
+### Service Definitions
+Regular route definitions are of the form:
+
+```coffee
+[
+  {
+    path: '/something'
+    method: 'get'
+    serviceName: 'indexThings'
+  }
+  {
+    path: '/something/:id'
+    method: 'get'
+    serviceName: 'showThing'
+  }
+]
+```
+The values of the `serviceName` property should resolve to a wired-up Law service
+when the adapter is constructed. If not, a default `noService` service will respond
+with a `501` error indicating that no service is implemented.
+
+The resource syntax uses the format:
+
+```coffee
+[
+  {
+    resource:
+      name: 'photos'
+      instance: 'photo'
+  }
+]
+```
+The `resource` key indicates that the route definition should be automatically expanded
+into several regular route definitions. The `name` should be the collection name (plural),
+and `instance` should be the singular name of a single member of the collection. This is
+used to automatically generate reasonable service names.
+
+Regular route definitions and `resource` route definitions can be freely interspersed within
+a single route definition array, and `resources` definitions will be expanded in-place.
+
+### Options
+
 Optional configuration can be passed via the `options` property of the arguments
 object. The current properties, which all default to `true`, are:
 
