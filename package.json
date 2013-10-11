@@ -16,7 +16,7 @@
     "should":"*",
     "connect":"*",
     "request":"*",
-    "law":"git+https://github.com/TorchlightSoftware/law.git#error"
+    "law":"git+https://github.com/TorchlightSoftware/law.git"
   },
   "engines":{
     "node":">= 0.8.4"
