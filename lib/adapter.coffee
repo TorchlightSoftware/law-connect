@@ -32,12 +32,12 @@ makeAdapter = ({services, routeDefs, options}) ->
     found = router.match pathname
 
     return {
-      service: found?.fn[method] or noService
+      service: found?.fn[method]
       pathArgs: found?.params
     }
 
   # Return a piece of connect middleware
-  (req, res) ->
+  (req, res, next) ->
 
     {service, pathArgs} = match req
 
@@ -45,6 +45,9 @@ makeAdapter = ({services, routeDefs, options}) ->
     # earlier in the middleware chain.
     {body, query, cookies} = req
     args = _.merge {}, pathArgs, query, cookies, body
+
+    # pass it on if we don't have a service for this route
+    return next() unless service?
 
     service args, (err, result) ->
       if (err instanceof errors.LawError)

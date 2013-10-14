@@ -3,7 +3,6 @@ request = require 'request'
 
 setup = require './setup'
 
-
 describe 'with no services or routes wired up', () ->
   beforeEach (done) ->
     options =
@@ -15,12 +14,12 @@ describe 'with no services or routes wired up', () ->
     @server.close()
     done()
 
-  it 'should return with a 501 status', (done) ->
+  it 'should return with a 404 status', (done) ->
     request.get @url, (err, resp, body) ->
 
       should.not.exist err
       should.exist resp
       should.exist resp.statusCode
-      resp.statusCode.should.equal 501
+      resp.statusCode.should.equal 404
 
       done()
