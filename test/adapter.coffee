@@ -1,5 +1,4 @@
 url = require 'url'
-
 law = require 'law'
 should = require 'should'
 request = require 'request'
@@ -9,26 +8,26 @@ setup = require './setup'
 
 # test services
 serviceDefs =
-  'hello':
+  hello:
     service: (args, done) ->
       done null, {greeting: 'hello, world'}
 
-  'echo':
+  echo:
     service: (args, done) ->
       done null, {echoed: args}
 
-  'greet':
+  greet:
     service: (args, done) ->
       {name} = args
       greeting = "greetings, #{name}"
       done null, {greeting}
 
-  'createSomething':
+  createSomething:
     service: (args, done) ->
       {toCreate} = args
       done null, {statusCode: 201, created: toCreate}
 
-  'returnNonLawError':
+  returnNonLawError:
     service: (args, done) ->
       err = new Error 'this is not a Law error'
       done err
