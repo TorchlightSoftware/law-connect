@@ -1,11 +1,11 @@
 {
   "name": "law-connect",
   "description": "Connect middleware for Law.",
-  "version": "0.1.0",
-  "homepage": "",
-  "repository": "",
-  "author": "Joseph K. Ranweiler",
-  "main":"./index.js",
+  "version": "0.0.1",
+  "homepage": "http://github.com/TorchlightSoftware/law-connect",
+  "repository": "git://github.com/TorchlightSoftware/law-connect.git",
+  "author": "Torchlight Software <info@torchlightsoftware.com>",
+  "main": "./index.js",
   "dependencies":{
     "coffee-script":"*",
     "lodash":"*",
@@ -16,7 +16,7 @@
     "should":"*",
     "connect":"*",
     "request":"*",
-    "law":"git+https://github.com/TorchlightSoftware/law.git"
+    "law":"*"
   },
   "engines":{
     "node":">= 0.8.4"
