@@ -1,5 +1,6 @@
 should = require 'should'
 law = require 'law'
+_ = require 'lodash'
 
 resolve = require '../lib/resolve'
 
@@ -55,4 +56,7 @@ describe 'resolve', () ->
 
         done()
 
-  # TODO: add test for nothing
+  it 'should not resolve a non-existant service', (done) ->
+    nothing = _.find @resolved, (r) -> r.serviceName is 'nothing'
+    should.not.exist nothing.service
+    done()

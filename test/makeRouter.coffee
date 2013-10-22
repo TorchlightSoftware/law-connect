@@ -1,5 +1,6 @@
 law = require 'law'
 should = require 'should'
+_ = require 'lodash'
 
 {inspect} = require './util'
 setup = require './setup'
@@ -55,4 +56,13 @@ describe 'makeRouter(...).match', () ->
 
             done()
 
-  # TODO: add test for nothing
+  it 'should not resolve a non-existant service', (done) ->
+    match = @router.match r.path
+    should.exist match, "expected path #{r.path} to match a route"
+
+    service = match.fn?[r.method]
+    should.not.exist service, "expected #{r.method} #{r.path} to not exist"
+
+    nothing = _.find @resolved, (r) -> r.serviceName is 'nothing'
+    should.not.exist nothing.service, "expected #{r.serviceName} to not be resolved"
+    done()
