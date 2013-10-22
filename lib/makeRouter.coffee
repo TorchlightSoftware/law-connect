@@ -14,8 +14,10 @@ makeRouter = (routes) ->
   transform = (result, pathRoutes, path) ->
     methodMap = {}
     for r in pathRoutes
-      methodMap[r.method] = r.service
-      methodMap[r.method].serviceName = r.serviceName
+      if r.service?
+        methodMap[r.method] = r.service
+        methodMap[r.method].serviceName = r.serviceName
+
     result[path] = methodMap
 
   # Actually transform the grouped routes

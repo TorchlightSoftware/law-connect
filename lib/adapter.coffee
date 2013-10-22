@@ -3,7 +3,6 @@ _ = require 'lodash'
 
 {errors} = require 'law'
 
-noService = require './noService'
 resolve = require './resolve'
 makeRouter = require './makeRouter'
 makeResource = require './makeResource'

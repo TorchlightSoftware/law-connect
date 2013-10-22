@@ -39,7 +39,7 @@ describe 'resolve', () ->
     should.exist @resolved, '@resolved should exist'
     done()
 
-  for i,r of routeDefs
+  for r, i in routeDefs when r.serviceName isnt 'nothing'
     do (i, r) ->
       description = "should resolve #{r.serviceName} iff it exists"
 
@@ -47,10 +47,12 @@ describe 'resolve', () ->
         should.exist @resolved[i]
         {serviceName} = @resolved[i]
         should.exist serviceName
-        should.exist @resolved[i].service
+        should.exist @resolved[i].service, "expected #{r.serviceName} to be resolved"
 
         @resolved[i].service {}, (err, result) ->
           should.equal err?.message, expected[serviceName]?.err?.message
           should.equal result.data, expected[serviceName]?.result.data
 
         done()
+
+  # TODO: add test for nothing

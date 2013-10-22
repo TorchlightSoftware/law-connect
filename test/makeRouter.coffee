@@ -16,14 +16,14 @@ services = law.applyMiddleware serviceDefs
 describe 'makeRouter(...).match', () ->
   beforeEach (done) ->
     @resolved = resolve services, routeDefs
-    should.exist @resolved
+    should.exist @resolved, 'expected services to resolve'
 
     @router = makeRouter @resolved
-    should.exist @router
+    should.exist @router, 'expected router to be created'
 
     done()
 
-  for i, r of routeDefs
+  for r, i in routeDefs when r.serviceName isnt 'nothing'
     do (i, r) ->
       reqDesc = "#{r.method.toUpperCase()} #{r.path}"
       description = "expect #{reqDesc} --> #{r.serviceName}"
@@ -31,14 +31,14 @@ describe 'makeRouter(...).match', () ->
       it description, (done) ->
 
         match = @router.match r.path
-        should.exist match
+        should.exist match, "expected path #{r.path} to match a route"
 
         service = match.fn?[r.method]
-        should.exist service
-        should.exist service.serviceName
+        should.exist service, "expected #{r.method} #{r.path} to exist"
+        should.exist service.serviceName, "expected #{r.method} #{r.path} to have a serviceName"
 
-        service.serviceName.should.equal  r.serviceName
-        should.exist @resolved[i].service
+        service.serviceName.should.equal r.serviceName
+        should.exist @resolved[i].service, "expected #{r.serviceName} to be resolved"
 
         service {}, (err, result) =>
           @resolved[i].service {}, (expectedErr, expectedResult) =>
@@ -54,3 +54,5 @@ describe 'makeRouter(...).match', () ->
             should.equal result?.data, expectedResult?.data
 
             done()
+
+  # TODO: add test for nothing

@@ -20,8 +20,7 @@ module.exports = [
     serviceName: 'updateThing'
   }
   {
-    # we expected this NOT to resolve to a service, thus
-    # to resolve to the default `noService` 501 service
+    # expecting this NOT to resolve
     path: '/nothing'
     method: 'get'
     serviceName: 'nothing'
