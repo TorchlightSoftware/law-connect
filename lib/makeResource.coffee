@@ -41,54 +41,54 @@ makeResource = (routeDef) ->
     {
       path: basePath
       method: 'get'
-      serviceName: camelCase 'index', collection
+      serviceName: "#{collection}/index"
     }
     # GET /photos/new -> #new
     # return an HTML form for creating a new photo
     {
       path: path.join basePath, 'new'
       method: 'get'
-      serviceName: camelCase 'new', instance
+      serviceName: "#{collection}/new"
     }
     # POST /photos -> #create
     # create a new photo
     {
       path: basePath
       method: 'post'
-      serviceName: camelCase 'create', instance
+      serviceName: "#{collection}/create"
     }
     # GET /photos/:id -> #show
     # display a specific photo
     {
       path: instancePath
       method: 'get'
-      serviceName: camelCase 'show', instance
+      serviceName: "#{collection}/show"
     }
     # GET /photos/:id/edit -> #edit
     # return an HTML form for editing a photo
     {
       path: path.join instancePath, 'edit'
       method: 'get'
-      serviceName: camelCase 'edit', instance
+      serviceName: "#{collection}/edit"
     }
     # PATCH/PUT /photos/:id -> #update
     # update a specific photo
     {
       path: instancePath
       method: 'patch'
-      serviceName: camelCase 'update', instance
+      serviceName: "#{collection}/update"
     }
     {
       path: instancePath
       method: 'put'
-      serviceName: camelCase 'update', instance
+      serviceName: "#{collection}/update"
     }
     # DELETE /photos/:id -> #destroy
     # delete a specific photo
     {
       path: instancePath
       method: 'delete'
-      serviceName: camelCase 'delete', instance
+      serviceName: "#{collection}/delete"
     }
   ]
 

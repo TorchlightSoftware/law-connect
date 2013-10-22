@@ -16,42 +16,42 @@ testData = [
       {
         path: '/photos'
         method: 'get'
-        serviceName: 'indexPhotos'
+        serviceName: 'photos/index'
       }
       {
         path: '/photos/new'
         method: 'get'
-        serviceName: 'newPhoto'
+        serviceName: 'photos/new'
       }
       {
         path: '/photos'
         method: 'post'
-        serviceName: 'createPhoto'
+        serviceName: 'photos/create'
       }
       {
         path: '/photos/:id'
         method: 'get'
-        serviceName: 'showPhoto'
+        serviceName: 'photos/show'
       }
       {
         path: '/photos/:id/edit'
         method: 'get'
-        serviceName: 'editPhoto'
+        serviceName: 'photos/edit'
       }
       {
         path: '/photos/:id'
         method: 'patch'
-        serviceName: 'updatePhoto'
+        serviceName: 'photos/update'
       }
       {
         path: '/photos/:id'
         method: 'put'
-        serviceName: 'updatePhoto'
+        serviceName: 'photos/update'
       }
       {
         path: '/photos/:id'
         method: 'delete'
-        serviceName: 'deletePhoto'
+        serviceName: 'photos/delete'
       }
     ]
   }
@@ -66,42 +66,42 @@ testData = [
       {
         path: '/photos'
         method: 'get'
-        serviceName: 'indexPhotos'
+        serviceName: 'photos/index'
       }
       {
         path: '/photos/new'
         method: 'get'
-        serviceName: 'newPhoto'
+        serviceName: 'photos/new'
       }
       {
         path: '/photos'
         method: 'post'
-        serviceName: 'createPhoto'
+        serviceName: 'photos/create'
       }
       {
         path: '/photos/:ident'
         method: 'get'
-        serviceName: 'showPhoto'
+        serviceName: 'photos/show'
       }
       {
         path: '/photos/:ident/edit'
         method: 'get'
-        serviceName: 'editPhoto'
+        serviceName: 'photos/edit'
       }
       {
         path: '/photos/:ident'
         method: 'patch'
-        serviceName: 'updatePhoto'
+        serviceName: 'photos/update'
       }
       {
         path: '/photos/:ident'
         method: 'put'
-        serviceName: 'updatePhoto'
+        serviceName: 'photos/update'
       }
       {
         path: '/photos/:ident'
         method: 'delete'
-        serviceName: 'deletePhoto'
+        serviceName: 'photos/delete'
       }
     ]
   }
@@ -116,42 +116,42 @@ testData = [
       {
         path: '/api/photographs'
         method: 'get'
-        serviceName: 'indexPhotographs'
+        serviceName: 'photographs/index'
       }
       {
         path: '/api/photographs/new'
         method: 'get'
-        serviceName: 'newPhotograph'
+        serviceName: 'photographs/new'
       }
       {
         path: '/api/photographs'
         method: 'post'
-        serviceName: 'createPhotograph'
+        serviceName: 'photographs/create'
       }
       {
         path: '/api/photographs/:id'
         method: 'get'
-        serviceName: 'showPhotograph'
+        serviceName: 'photographs/show'
       }
       {
         path: '/api/photographs/:id/edit'
         method: 'get'
-        serviceName: 'editPhotograph'
+        serviceName: 'photographs/edit'
       }
       {
         path: '/api/photographs/:id'
         method: 'patch'
-        serviceName: 'updatePhotograph'
+        serviceName: 'photographs/update'
       }
       {
         path: '/api/photographs/:id'
         method: 'put'
-        serviceName: 'updatePhotograph'
+        serviceName: 'photographs/update'
       }
       {
         path: '/api/photographs/:id'
         method: 'delete'
-        serviceName: 'deletePhotograph'
+        serviceName: 'photographs/delete'
       }
     ]
   }
@@ -168,6 +168,6 @@ describe 'resource generation', () ->
 
       it "should #{description}", (done) ->
         routeDefs = makeResource routeDef
-        (_.isEqual routeDefs, expected).should.be.true
+        routeDefs.should.eql expected
 
         done()
