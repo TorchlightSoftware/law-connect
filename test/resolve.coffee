@@ -4,9 +4,6 @@ _ = require 'lodash'
 
 resolve = require '../lib/resolve'
 
-{inspect} = require './util'
-
-
 routeDefs = require '../sample/routes'
 serviceDefs = require '../sample/services'
 services = law.applyMiddleware serviceDefs

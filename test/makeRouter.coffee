@@ -2,7 +2,6 @@ law = require 'law'
 should = require 'should'
 _ = require 'lodash'
 
-{inspect} = require './util'
 setup = require './setup'
 
 resolve = require '../lib/resolve'
@@ -43,14 +42,6 @@ describe 'makeRouter(...).match', () ->
 
         service {}, (err, result) =>
           @resolved[i].service {}, (expectedErr, expectedResult) =>
-            # inspect {
-            #   actual:
-            #     err: err
-            #     result: result
-            #   expected:
-            #     err: expectedErr
-            #     result: expectedResult
-            # }
             should.equal err?.message, expectedErr?.message
             should.equal result?.data, expectedResult?.data
 

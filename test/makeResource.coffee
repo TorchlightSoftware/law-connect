@@ -1,9 +1,7 @@
 should = require 'should'
 _ = require 'lodash'
 
-{inspect} = require './util'
 makeResource = require '../lib/makeResource'
-
 
 testData = [
   {
