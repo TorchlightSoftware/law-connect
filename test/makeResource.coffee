@@ -7,9 +7,7 @@ testData = [
   {
     description: 'have sane defaults'
     routeDef:
-      resource:
-        name: 'photos'
-        instance: 'photo'
+      resource: 'photos'
     expected: [
       {
         path: '/photos'
@@ -56,10 +54,8 @@ testData = [
   {
     description: 'let you change the `id` key'
     routeDef:
-      resource:
-        name: 'photos'
-        instance: 'photo'
-        idKey: 'ident'
+      resource: 'photos'
+      id: 'ident'
     expected: [
       {
         path: '/photos'
@@ -106,10 +102,8 @@ testData = [
   {
     description: 'let you specify all path values'
     routeDef:
-      resource:
-        collection: 'photographs'
-        instance: 'photograph'
-        pathPrefix: 'api'
+      resource: 'photographs'
+      prefix: 'api'
     expected: [
       {
         path: '/api/photographs'

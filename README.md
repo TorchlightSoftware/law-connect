@@ -99,16 +99,16 @@ The resource syntax uses the format:
 ```coffee
 [
   {
-    resource:
-      name: 'photos'
-      instance: 'photo'
+    resource: 'photos'
+    prefix: 'api'
+    id: 'special_field'
   }
 ]
 ```
-The `resource` key indicates that the route definition should be automatically expanded
-into several regular route definitions. The `name` should be the collection name (plural),
-and `instance` should be the singular name of a single member of the collection. This is
-used to automatically generate reasonable service names.
+The presence of the `resource` key indicates that the route definition should be automatically expanded
+into several regular route definitions. The value of `resource` should be the collection name (plural).
+
+The `prefix` and `id` keys are optional.  `prefix` will namespace all of the routes under the provided string.  `id` configures what named argument will be passed in for the instance routes.
 
 Regular route definitions and `resource` route definitions can be freely interspersed within
 a single route definition array, and `resources` definitions will be expanded in-place.

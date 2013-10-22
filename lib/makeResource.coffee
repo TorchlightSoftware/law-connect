@@ -1,33 +1,27 @@
 url = require 'url'
-path = require 'path'
 
 makeResource = (routeDef) ->
   # If `resource` is not a key in `routeDef`, then the
-  # routeDef does not define a resource, so we don't want
-  # to auto-expand it, and should return early.
+  # routeDef does not define a resource, so return it unmodified.
   return routeDef unless routeDef.resource?
-  def = routeDef.resource
-
-  # name of one instance of the resource
-  instance = def.instance or def.name
-
-  # name of the collective resource
-  collection = def?.collection or def.name
 
   # unless overridden, default to ':id' for instance ids
-  if def?.idKey
-    idKey = ":#{def.idKey}"
+  if routeDef.id?
+    idKey = ":#{routeDef.id}"
   else
     idKey = ':id'
 
-  # submount the path if desired
-  pathPrefix = def?.pathPrefix or '/'
+  if routeDef.prefix? and not routeDef.prefix.match /^\//
+    routeDef.prefix = '/' + routeDef.prefix
 
-  # local constants:
-  #   basePath is the collection path prefix
+  # prefix the path if desired
+  joinUrl = (parts...) ->
+    [parts...].join '/'
+
+  #   basePath is the resource path prefix
   #   instancePath is the path prefix for one instance
-  basePath = path.join '/', pathPrefix, collection
-  instancePath = path.join basePath, idKey
+  basePath = joinUrl routeDef.prefix, routeDef.resource
+  instancePath = joinUrl basePath, idKey
 
   # build array of auto-generated routes.
   # modeled after:
@@ -38,54 +32,54 @@ makeResource = (routeDef) ->
     {
       path: basePath
       method: 'get'
-      serviceName: "#{collection}/index"
+      serviceName: "#{routeDef.resource}/index"
     }
     # GET /photos/new -> #new
     # return an HTML form for creating a new photo
     {
-      path: path.join basePath, 'new'
+      path: joinUrl basePath, 'new'
       method: 'get'
-      serviceName: "#{collection}/new"
+      serviceName: "#{routeDef.resource}/new"
     }
     # POST /photos -> #create
     # create a new photo
     {
       path: basePath
       method: 'post'
-      serviceName: "#{collection}/create"
+      serviceName: "#{routeDef.resource}/create"
     }
     # GET /photos/:id -> #show
     # display a specific photo
     {
       path: instancePath
       method: 'get'
-      serviceName: "#{collection}/show"
+      serviceName: "#{routeDef.resource}/show"
     }
     # GET /photos/:id/edit -> #edit
     # return an HTML form for editing a photo
     {
-      path: path.join instancePath, 'edit'
+      path: joinUrl instancePath, 'edit'
       method: 'get'
-      serviceName: "#{collection}/edit"
+      serviceName: "#{routeDef.resource}/edit"
     }
     # PATCH/PUT /photos/:id -> #update
     # update a specific photo
     {
       path: instancePath
       method: 'patch'
-      serviceName: "#{collection}/update"
+      serviceName: "#{routeDef.resource}/update"
     }
     {
       path: instancePath
       method: 'put'
-      serviceName: "#{collection}/update"
+      serviceName: "#{routeDef.resource}/update"
     }
     # DELETE /photos/:id -> #destroy
     # delete a specific photo
     {
       path: instancePath
       method: 'delete'
-      serviceName: "#{collection}/delete"
+      serviceName: "#{routeDef.resource}/delete"
     }
   ]
 
