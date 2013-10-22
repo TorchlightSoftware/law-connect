@@ -1,7 +1,7 @@
 {
   "name": "law-connect",
   "description": "Connect middleware for Law.",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "homepage": "http://github.com/TorchlightSoftware/law-connect",
   "repository": "git://github.com/TorchlightSoftware/law-connect.git",
   "author": "Torchlight Software <info@torchlightsoftware.com>",
