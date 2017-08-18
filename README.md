@@ -21,28 +21,29 @@ Law-Connect simply provides a constructor for a piece of Connect middleware.
 It expects a fully wired-up `services` object (the output of `law.create`).
 
 ## Example
-(In CoffeeScript):
 
-```coffee
+```js
 connect = require 'connect'
 lawAdapter = require 'law-connect'
 
-# Given a Connect application...
+// Given a Connect application...
 app = connect()
 
-# The connect bodyParser middleware must be `use`'d before Law-Connect
-app.use connect.bodyParser() # required!
+// The `connect.json`, `connect.urlencoded`, `connect.multipart` middleware must be `use`'d before Law-Connect
+app.use connect.json() // required!
+app.use connect.urlencoded() // required!
+app.use connect.multipart() // required!
 
-# Given a wired-up `services` object, e.g. the result of:
-#   services = law.create {services, jargon, policy}
+// Given a wired-up `services` object, e.g. the result of:
+//   services = law.create {services, jargon, policy}
 routeDefs = load './routeDefs'
 
-# Hide most Error information in responses
+// Hide most Error information in responses
 options =
   includeDetails: false
   includeStack: false
 
-# Apply the middleware!
+// Apply the middleware!
 app.use lawAdapter({services, routeDefs, options})
 ```
 
@@ -76,7 +77,7 @@ response body).
 ### Service Definitions
 Regular route definitions are of the form:
 
-```coffee
+```js
 [
   {
     path: '/something'
@@ -96,7 +97,7 @@ with a `501` error indicating that no service is implemented.
 
 The resource syntax uses the format:
 
-```coffee
+```js
 [
   {
     resource: 'photos'

@@ -1,30 +1,30 @@
 {
   "name": "law-connect",
   "description": "Connect middleware for Law.",
-  "version": "0.0.8",
+  "version": "1.0.0",
   "homepage": "http://github.com/TorchlightSoftware/law-connect",
   "repository": "git://github.com/TorchlightSoftware/law-connect.git",
   "author": "Torchlight Software <info@torchlightsoftware.com>",
   "main": "./index.js",
-  "dependencies":{
-    "coffee-script":"*",
-    "lodash":"*",
-    "routes":"*"
+  "dependencies": {
+    "lodash": "^4.17.4",
+    "routes": "^1.2.0"
   },
-  "devDependencies":{
-    "mocha":"*",
-    "should":"*",
-    "connect":"*",
-    "request":"*",
-    "law":"*"
+  "devDependencies": {
+    "body-parser": "^1.17.2",
+    "connect": "*",
+    "law": "*",
+    "mocha": "*",
+    "request": "*",
+    "should": "*"
   },
-  "engines":{
-    "node":">= 0.8.4"
+  "engines": {
+    "node": ">= 0.8.4"
   },
-  "licenses":[
+  "licenses": [
     {
-      "type":"MIT",
-      "url":""
+      "type": "MIT",
+      "url": ""
     }
   ],
   "scripts": {
