@@ -1,12 +1,13 @@
 {
   "name": "law-connect",
   "description": "Connect middleware for Law.",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "homepage": "http://github.com/TorchlightSoftware/law-connect",
   "repository": "git://github.com/TorchlightSoftware/law-connect.git",
   "author": "Torchlight Software <info@torchlightsoftware.com>",
   "main": "./index.js",
   "dependencies": {
+    "fclone": "^1.0.11",
     "lodash": "^4.17.4",
     "routes": "^1.2.0"
   },

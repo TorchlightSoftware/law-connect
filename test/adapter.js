@@ -6,6 +6,12 @@ const _ = require('lodash')
 
 const setup = require('./setup')
 
+const circular = {
+  x: 2,
+  y: 3
+}
+circular.moreData = circular
+
 // test services
 const serviceDefs = {
   hello: {
@@ -75,6 +81,22 @@ const routes = [
     }
   },
   {
+    serviceName: 'echo',
+    method: 'post',
+    path: '/echoCircular',
+    data: circular,
+    expected: {
+      body: {
+        echoed: {
+          x: 2,
+          y: 3,
+          moreData: '[Circular ~]'
+        }
+      },
+      statusCode: 200
+    }
+  },
+  {
     serviceName: 'greet',
     method: 'get',
     path: '/greet/:name',
@@ -124,7 +146,7 @@ const routes = [
 ]
 
 
-describe('with simple services wired to routes', function() {
+describe('adapter - with simple services wired to routes', function() {
   beforeEach(function(done) {
     const options = {includeStack: false}
     _.merge(this, setup(services, routes, {}, options))
@@ -160,7 +182,7 @@ describe('with simple services wired to routes', function() {
           should.exist(resp.statusCode)
           should(resp.statusCode).equal(r.expected.statusCode)
 
-          should(_.isEqual(body, r.expected.body)).be.true
+          should(body).eql(r.expected.body)
 
           return done()
         })
